@@ -26,13 +26,15 @@ jobs:
 
 workflows:
   version: 2
-  main:
+  standard:
     jobs:
       - build_docker_image:
           context: org-global
           filters:
             tags:
-              only: /.*/
+              ignore: /^v.*/
+  versioned:
+    jobs:
       - build_and_push_docker_image:
           context: org-global
           filters:
