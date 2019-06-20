@@ -7,6 +7,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
       - run: docker pull appliedblockchain/k0-base
       - run: docker build -t appliedblockchain/k0-base .
 
@@ -16,9 +17,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      - run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
       - run: docker pull appliedblockchain/k0-base
       - run: docker build -t appliedblockchain/k0-base .
-      - run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
       - run: docker tag appliedblockchain/k0-base appliedblockchain/k0-base:$CIRCLE_TAG
       - run: docker push appliedblockchain/k0-base:$CIRCLE_TAG
       - run: docker push appliedblockchain/k0-base
