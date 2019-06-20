@@ -1,0 +1,39 @@
+version: 2
+
+jobs:
+  build_docker_image:
+    docker:
+      - image: docker:18.06.3-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: docker build -t appliedblockchain/k0-base .
+
+  build_and_push_docker_image:
+    docker:
+      - image: docker:18.06.3-ce-git
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: echo $DOCKER_PASSWORD | docker login --username $DOCKER_USER --password-stdin
+      - run: docker build -t appliedblockchain/k0-base .
+      - run: docker tag appliedblockchain/k0-base appliedblockchain/k0-base:$CIRCLE_TAG
+      - run: docker push appliedblockchain/k0-base:$CIRCLE_TAG
+      - run: docker push appliedblockchain/k0-base
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build_docker_image:
+          context: org-global
+          filters:
+            tags:
+              only: /.*/
+      - build_and_push_docker_image:
+          context: org-global
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
