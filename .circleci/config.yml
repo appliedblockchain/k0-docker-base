@@ -32,13 +32,13 @@ workflows:
           context: org-global
           filters:
             tags:
-              ignore: /^v.*/
+              ignore: /^v\d+\.\d+.\d+$/
   versioned:
     jobs:
       - build_and_push_docker_image:
           context: org-global
           filters:
             tags:
-              only: /^v.*/
+              only: /^v\d+\.\d+.\d+$/
             branches:
               ignore: /.*/
