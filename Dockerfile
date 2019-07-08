@@ -15,7 +15,7 @@ RUN curl -LO https://github.com/google/googletest/archive/release-1.8.1.tar.gz \
 
 RUN git clone https://github.com/scipr-lab/libsnark.git && cd libsnark && git checkout 477c9dfd07b280e42369f82f89c08416319e24ae && git submodule update --init --recursive && cd .. && \
     cd libsnark/depends/libfqfft && mkdir build && cd build && cmake .. && make -j 2 && make install && cd ../../../.. && \
-    cd libsnark && mkdir build && cd build && cmake -DCURVE=ALT_BN128 -DMULTICORE=ON -DDEBUG=ON -DBINARY_OUTPUT=OFF -DMONTGOMERY_OUTPUT=OFF -DUSE_ASM=ON .. && \
+    cd libsnark && mkdir build && cd build && cmake -DCURVE=ALT_BN128 -DMULTICORE=ON -DDEBUG=ON -DBINARY_OUTPUT=OFF -DMONTGOMERY_OUTPUT=OFF -DUSE_ASM=ON -DWITH_PROCPS=OFF .. && \
     cat libsnark/CMakeFiles/snark.dir/flags.make && \
     make -j 2 && make install && cd ../.. && \
     rm -rf libsnark
