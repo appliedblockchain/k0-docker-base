@@ -12,10 +12,3 @@ RUN curl -LO https://github.com/Kitware/CMake/releases/download/v3.13.4/cmake-3.
 
 RUN curl -LO https://github.com/google/googletest/archive/release-1.8.1.tar.gz \
     && tar xvf release-1.8.1.tar.gz && cd googletest-release-1.8.1 && mkdir build && cd build && cmake .. && make && make install && cd ../.. && rm -rf release-1.8.1.tar.gz googletest-release-1.8.1
-
-RUN git clone https://github.com/scipr-lab/libsnark.git && cd libsnark && git checkout 477c9dfd07b280e42369f82f89c08416319e24ae && git submodule update --init --recursive && cd .. && \
-    cd libsnark/depends/libfqfft && mkdir build && cd build && cmake .. && make -j 2 && make install && cd ../../../.. && \
-    cd libsnark && mkdir build && cd build && cmake -DCURVE=ALT_BN128 -DMULTICORE=ON -DDEBUG=ON -DBINARY_OUTPUT=OFF -DMONTGOMERY_OUTPUT=OFF -DUSE_ASM=ON -DWITH_PROCPS=OFF .. && \
-    cat libsnark/CMakeFiles/snark.dir/flags.make && \
-    make -j 2 && make install && cd ../.. && \
-    rm -rf libsnark
